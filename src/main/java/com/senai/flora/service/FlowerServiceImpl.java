@@ -1,8 +1,7 @@
-package com.senai.flora.serviceImpl;
+package com.senai.flora.service;
 
 import com.senai.flora.dto.FlowerDto;
-import com.senai.flora.repository.FlowerRepository;
-import com.senai.flora.service.FlowerService;
+import com.senai.flora.model.repository.FlowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
