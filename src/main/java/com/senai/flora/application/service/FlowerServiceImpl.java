@@ -1,7 +1,8 @@
-package com.senai.flora.service;
+package com.senai.flora.application.service;
 
-import com.senai.flora.dto.FlowerDto;
-import com.senai.flora.model.repository.FlowerRepository;
+import com.senai.flora.application.dto.FlowerDto;
+import com.senai.flora.application.mapper.FlowerMapper;
+import com.senai.flora.domain.repository.FlowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,27 +15,30 @@ public class FlowerServiceImpl implements FlowerService {
     @Autowired
     FlowerRepository repository;
 
+    @Autowired
+    FlowerMapper mapper;
+
     @Override
     public void saveFlower(FlowerDto dto) {
-        repository.save(dto.fromDTO());
+        repository.save(mapper.fromDto(dto));
     }
 
     @Override
     public void saveFlowers(List<FlowerDto> flowers) {
         for (FlowerDto f : flowers){
-         repository.save(f.fromDTO());
+         repository.save(mapper.fromDto(f));
         }
     }
 
     @Override
     public List<FlowerDto> listFlowers() {
         System.out.println(repository.findAll());
-        return repository.findByStatusTrue().stream().map(FlowerDto::toDTO).collect(Collectors.toList());
+        return repository.findByStatusTrue().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public List<FlowerDto> listDisabledFlowers() {
-        return repository.findByStatusFalse().stream().map(FlowerDto::toDTO).collect(Collectors.toList());
+        return repository.findByStatusFalse().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override

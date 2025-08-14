@@ -1,4 +1,4 @@
-package com.senai.flora.model.entity;
+package com.senai.flora.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

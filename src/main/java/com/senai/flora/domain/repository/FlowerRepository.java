@@ -1,7 +1,7 @@
-package com.senai.flora.model.repository;
+package com.senai.flora.domain.repository;
 
-import com.senai.flora.dto.FlowerDto;
-import com.senai.flora.model.entity.Flower;
+import com.senai.flora.application.dto.FlowerDto;
+import com.senai.flora.domain.entity.Flower;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

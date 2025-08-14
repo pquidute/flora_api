@@ -1,5 +1,5 @@
-package com.senai.flora.service;
-import com.senai.flora.dto.FlowerDto;
+package com.senai.flora.application.service;
+import com.senai.flora.application.dto.FlowerDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
