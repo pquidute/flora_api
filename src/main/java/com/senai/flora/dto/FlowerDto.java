@@ -1,6 +1,6 @@
 package com.senai.flora.dto;
 
-import com.senai.flora.model.Flower;
+import com.senai.flora.model.entity.Flower;
 
 public record FlowerDto (
           Long id,
