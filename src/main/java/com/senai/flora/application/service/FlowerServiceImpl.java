@@ -50,10 +50,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public boolean updateFlower(Long id, FlowerDto dto) {
         return repository.findById(id).map(flower -> {
-            flower.setName(dto.name());
-            flower.setColor(dto.color());
-            flower.setPrice(dto.price());
-            repository.save(flower);
+            repository.save(mapper.fromDto(dto));
             return true;
         }).orElse(false);
     }

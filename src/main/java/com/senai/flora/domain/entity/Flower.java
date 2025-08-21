@@ -1,15 +1,11 @@
 package com.senai.flora.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Flower {
@@ -19,11 +15,57 @@ public class Flower {
 
     private String name;
     private String color;
-
     private Boolean status = true;
 
     @Positive
     @NotNull
     private Double price;
 
+    @PrePersist
+    public void prePersist() {
+        if (this.status == null) {
+            this.status = true; // Ensures that the status is set to true if it's null
+        }
+    }
+
+    //Manual getters and setters because annotations (@Data, @Getter or @Setter) were conflicting with mapstruct library
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 }

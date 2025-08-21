@@ -67,7 +67,8 @@ public class FlowerController {
                                     {
                                         "name":"orchids",
                                         "color": "purple",
-                                        "price": 23
+                                        "price": 23,
+                                        "status" : true
                                     }
                                     """)
                     )
@@ -95,17 +96,20 @@ public class FlowerController {
                             {
                                 "name": "orchids",
                                 "color": "purple",
-                                "price": 23
+                                "price": 23,
+                                "status" : true
                             },
                             {
                                 "name": "rose",
                                 "color": "pink",
-                                "price": 12
+                                "price": 12,
+                                "status" : true
                             },
                             {
                                 "name": "amaryllis",
                                 "color": "yellow",
-                                "price": 40
+                                "price": 40,
+                                "status" : true
                             }
                             ]
                     """)
@@ -161,6 +165,6 @@ public class FlowerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> disableFlower(@PathVariable Long id){
         service.disableFlower(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Flower successfully deleted!");
     }
 }
