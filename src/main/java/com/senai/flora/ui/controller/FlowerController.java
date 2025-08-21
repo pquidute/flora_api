@@ -1,10 +1,8 @@
 package com.senai.flora.ui.controller;
 
 import com.senai.flora.application.dto.FlowerDto;
-import com.senai.flora.application.service.FlowerServiceImpl;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import com.senai.flora.application.service.FlowerAppServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("/flowers")
 public class FlowerController {
     @Autowired
-    FlowerServiceImpl service;
+    FlowerAppServiceImpl service;
 
     @Operation(
             summary = "List all active flowers",

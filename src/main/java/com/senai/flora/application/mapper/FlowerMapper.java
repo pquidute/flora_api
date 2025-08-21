@@ -5,7 +5,6 @@ import com.senai.flora.domain.entity.Flower;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-//FIXME - not serializing/deserializing correctly
 @Mapper(componentModel = "spring")
 public interface FlowerMapper {
     @Mapping(source = "id", target = "id")

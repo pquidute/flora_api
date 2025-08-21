@@ -3,6 +3,7 @@ package com.senai.flora.application.service;
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.mapper.FlowerMapper;
 import com.senai.flora.domain.repository.FlowerRepository;
+import com.senai.flora.domain.service.FlowerDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +12,26 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class FlowerServiceImpl implements FlowerService {
+public class FlowerAppServiceImpl implements FloweAppService {
     @Autowired
     FlowerRepository repository;
+    @Autowired
+    FlowerDomainService domainService;
 
     @Autowired
     FlowerMapper mapper;
 
     @Override
     public void saveFlower(FlowerDto dto) {
+        domainService.validateFlower(dto);
         repository.save(mapper.fromDto(dto));
     }
 
     @Override
     public void saveFlowers(List<FlowerDto> flowers) {
         for (FlowerDto f : flowers){
-         repository.save(mapper.fromDto(f));
+            domainService.validateFlower(f);
+            repository.save(mapper.fromDto(f));
         }
     }
 
@@ -50,6 +55,7 @@ public class FlowerServiceImpl implements FlowerService {
     @Override
     public boolean updateFlower(Long id, FlowerDto dto) {
         return repository.findById(id).map(flower -> {
+            domainService.validateFlower(dto);
             repository.save(mapper.fromDto(dto));
             return true;
         }).orElse(false);

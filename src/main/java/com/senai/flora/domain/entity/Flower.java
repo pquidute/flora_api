@@ -21,13 +21,6 @@ public class Flower {
     @NotNull
     private Double price;
 
-    @PrePersist
-    public void prePersist() {
-        if (this.status == null) {
-            this.status = true; // Ensures that the status is set to true if it's null
-        }
-    }
-
     //Manual getters and setters because annotations (@Data, @Getter or @Setter) were conflicting with mapstruct library
     public Long getId() {
         return id;

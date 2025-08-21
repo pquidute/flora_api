@@ -1,4 +1,4 @@
-DB URL: http://localhost:8080/h2-console
-Login with:
-url - jdbc:h2:mem:flora_db
-username - sa
+ACCESS: http://localhost:8080/h2-console
+LOGIN WITH:
+- url - jdbc:h2:mem:flora_db
+- username - sa
