@@ -7,8 +7,8 @@ import java.util.Optional;
 
 
 @Service
-public interface FloweAppService {
-    void saveFlower(FlowerDto dto);
+public interface FlowerAppService {
+    FlowerDto saveFlower(FlowerDto dto);
     void saveFlowers(List<FlowerDto> dto);
     List<FlowerDto> listFlowers();
     List<FlowerDto> listDisabledFlowers();

@@ -91,24 +91,66 @@ public class FlowerController {
                             schema = @Schema(implementation = FlowerDto.class),
                             examples = @ExampleObject(value = """
                             [
-                            {
-                                "name": "orchids",
-                                "color": "purple",
-                                "price": 23,
-                                "status" : true
-                            },
-                            {
-                                "name": "rose",
-                                "color": "pink",
-                                "price": 12,
-                                "status" : true
-                            },
-                            {
-                                "name": "amaryllis",
-                                "color": "yellow",
-                                "price": 40,
-                                "status" : true
-                            }
+                               {
+                                 "name": "lilies",
+                                 "color": "white",
+                                 "price": 18,
+                                 "status": true
+                               },
+                               {
+                                 "name": "tulips",
+                                 "color": "red",
+                                 "price": 15,
+                                 "status": true
+                               },
+                               {
+                                 "name": "daisies",
+                                 "color": "blue",
+                                 "price": 10,
+                                 "status": true
+                               },
+                               {
+                                 "name": "sunflowers",
+                                 "color": "yellow",
+                                 "price": 22,
+                                 "status": true
+                               },
+                               {
+                                 "name": "violets",
+                                 "color": "purple",
+                                 "price": 20,
+                                 "status": false
+                               },
+                               {
+                                 "name": "carnations",
+                                 "color": "white",
+                                 "price": 8,
+                                 "status": true
+                               },
+                               {
+                                 "name": "peonies",
+                                 "color": "pink",
+                                 "price": 30,
+                                 "status": false
+                               },
+                               {
+                                 "name": "gerbera",
+                                 "color": "orange",
+                                 "price": 16,
+                                 "status": true
+                               },
+                               {
+                                 "name": "hydrangeas",
+                                 "color": "blue",
+                                 "price": 25,
+                                 "status": true
+                               },
+                               {
+                                 "name": "magnolia",
+                                 "color": "white",
+                                 "price": 35,
+                                 "status": true
+                               }
                             ]
                     """)
                     )

@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class FlowerAppServiceImpl implements FloweAppService {
+public class FlowerAppServiceImpl implements FlowerAppService {
     @Autowired
     FlowerRepository repository;
     @Autowired
@@ -22,9 +22,10 @@ public class FlowerAppServiceImpl implements FloweAppService {
     FlowerMapper mapper;
 
     @Override
-    public void saveFlower(FlowerDto dto) {
+    public FlowerDto saveFlower(FlowerDto dto) {
         domainService.validateFlower(dto);
         repository.save(mapper.fromDto(dto));
+        return dto;
     }
 
     @Override

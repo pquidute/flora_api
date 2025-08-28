@@ -15,11 +15,12 @@ public class Flower {
 
     private String name;
     private String color;
-    private Boolean status = true;
 
     @Positive
     @NotNull
     private Double price;
+
+    private Boolean status = true;
 
     //Manual getters and setters because annotations (@Data, @Getter or @Setter) were conflicting with mapstruct library
     public Long getId() {
