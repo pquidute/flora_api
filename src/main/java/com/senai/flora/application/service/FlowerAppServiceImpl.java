@@ -2,6 +2,7 @@ package com.senai.flora.application.service;
 
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.mapper.FlowerMapper;
+import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.repository.FlowerRepository;
 import com.senai.flora.domain.service.FlowerDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class FlowerAppServiceImpl implements FlowerAppService {
 
     @Override
     public FlowerDto saveFlower(FlowerDto dto) {
-        domainService.validateFlower(dto);
+        validateFlower(dto);
         repository.save(mapper.fromDto(dto));
         return dto;
     }
@@ -31,7 +32,7 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     @Override
     public void saveFlowers(List<FlowerDto> flowers) {
         for (FlowerDto f : flowers){
-            domainService.validateFlower(f);
+            validateFlower(f);
             repository.save(mapper.fromDto(f));
         }
     }
@@ -56,7 +57,7 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     @Override
     public boolean updateFlower(Long id, FlowerDto dto) {
         return repository.findById(id).map(flower -> {
-            domainService.validateFlower(dto);
+            validateFlower(dto);
             repository.save(mapper.fromDto(dto));
             return true;
         }).orElse(false);
@@ -69,5 +70,25 @@ public class FlowerAppServiceImpl implements FlowerAppService {
             repository.save(flower);
             return true;
         }).orElse(false);
+    }
+
+
+    public void validateFlower(FlowerDto dto){
+        validateName(dto.name());
+        domainService.validatePrice(dto.price());
+        validateColor(dto.color());
+    }
+
+    public void validateName(String name) {
+        if (name.trim().isEmpty()) {
+            throw new InvalidArgumentException("Flower name can´t be empty");
+        }
+    }
+
+
+    public void validateColor(String color) {
+        if (color.trim().isEmpty()) {
+            throw new InvalidArgumentException("Flower color can´t be empty");
+        }
     }
 }
