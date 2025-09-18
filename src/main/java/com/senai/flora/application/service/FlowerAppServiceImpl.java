@@ -2,10 +2,13 @@ package com.senai.flora.application.service;
 
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.mapper.FlowerMapper;
+import com.senai.flora.domain.entity.Flower;
+import com.senai.flora.domain.exception.FlowerNotFoundException;
 import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.repository.FlowerRepository;
 import com.senai.flora.domain.service.FlowerDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +28,17 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     @Override
     public FlowerDto saveFlower(FlowerDto dto) {
         validateFlower(dto);
-        repository.save(mapper.fromDto(dto));
-        return dto;
+        Flower flower = formatBody(dto);
+        repository.save(flower);
+        return mapper.toDto(flower);
     }
 
     @Override
     public void saveFlowers(List<FlowerDto> flowers) {
         for (FlowerDto f : flowers){
             validateFlower(f);
-            repository.save(mapper.fromDto(f));
+            Flower flower = formatBody(f);
+            repository.save(flower);
         }
     }
 
@@ -51,16 +56,21 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     @Override
     public Optional<FlowerDto> getFlowerById(Long id) {
         System.out.println(repository.findByIdAndStatusTrue(id));
-        return repository.findByIdAndStatusTrue(id);
+        Optional<Flower> target = repository.findByIdAndStatusTrue(id);
+        Optional<FlowerDto> targetDto = target.map(mapper::toDto);
+        return targetDto;
     }
 
     @Override
     public boolean updateFlower(Long id, FlowerDto dto) {
-        return repository.findById(id).map(flower -> {
-            validateFlower(dto);
-            repository.save(mapper.fromDto(dto));
-            return true;
-        }).orElse(false);
+        Flower target = repository.findByIdAndStatusTrue(id)
+                .orElseThrow(() -> new FlowerNotFoundException("Flower not found or not active"));
+
+        validateFlower(dto);
+        Flower flower = formatBody(dto);
+        flower.setId(target.getId());
+        repository.save(flower);
+        return true;
     }
 
     @Override
@@ -90,5 +100,12 @@ public class FlowerAppServiceImpl implements FlowerAppService {
         if (color.trim().isEmpty()) {
             throw new InvalidArgumentException("Flower color can´t be empty");
         }
+    }
+
+    //This method ensures that all flowers are saved with status true
+    public Flower formatBody(FlowerDto dto){
+        Flower flower = mapper.fromDto(dto);
+        flower.setStatus(true);
+        return flower;
     }
 }

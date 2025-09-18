@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface FlowerRepository extends JpaRepository<Flower, Long> {
     List<Flower> findByStatusTrue();
     List<Flower> findByStatusFalse();
-    Optional<FlowerDto> findByIdAndStatusTrue(Long id);
+    Optional<Flower> findByIdAndStatusTrue(Long id);
 }

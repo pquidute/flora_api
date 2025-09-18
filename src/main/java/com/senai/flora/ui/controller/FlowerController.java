@@ -65,8 +65,7 @@ public class FlowerController {
                                     {
                                         "name":"orchids",
                                         "color": "purple",
-                                        "price": 23,
-                                        "status" : true
+                                        "price": 23
                                     }
                                     """)
                     )
@@ -119,7 +118,7 @@ public class FlowerController {
                                  "name": "violets",
                                  "color": "purple",
                                  "price": 20,
-                                 "status": false
+                                 "status": true
                                },
                                {
                                  "name": "carnations",
@@ -131,7 +130,7 @@ public class FlowerController {
                                  "name": "peonies",
                                  "color": "pink",
                                  "price": 30,
-                                 "status": false
+                                 "status": true
                                },
                                {
                                  "name": "gerbera",
@@ -189,12 +188,12 @@ public class FlowerController {
                     @ApiResponse(responseCode = "400", description = "Bad request")
             }
     )
+
     @PutMapping("/{id}")
     public ResponseEntity<String> updateFlower(@PathVariable Long id, @RequestBody FlowerDto flowerDto){
         service.updateFlower(id, flowerDto);
         return ResponseEntity.ok(flowerDto.name() + " successfully updated!");
     }
-
     @Operation(
             summary = "Disable a flower",
             responses = {
