@@ -6,9 +6,8 @@ import com.senai.flora.domain.entity.Flower;
 import com.senai.flora.domain.exception.FlowerNotFoundException;
 import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.repository.FlowerRepository;
-import com.senai.flora.domain.service.FlowerDomainService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +15,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class FlowerAppServiceImpl implements FlowerAppService {
-    @Autowired
-    FlowerRepository repository;
-    @Autowired
-    FlowerDomainService domainService;
+    private final FlowerRepository repository;
+    private final FlowerMapper mapper;
 
-    @Autowired
-    FlowerMapper mapper;
+    // Constructor injection (better practice for testing and immutability)
+    public FlowerAppServiceImpl(FlowerRepository repository, FlowerMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public FlowerDto saveFlower(FlowerDto dto) {
@@ -85,7 +86,10 @@ public class FlowerAppServiceImpl implements FlowerAppService {
 
     public void validateFlower(FlowerDto dto){
         validateName(dto.name());
-        domainService.validatePrice(dto.price());
+
+        Flower f = mapper.fromDto(dto);
+        f.validatePrice(dto.price());
+
         validateColor(dto.color());
     }
 

@@ -1,5 +1,7 @@
 package com.senai.flora.domain.entity;
 
+import com.senai.flora.domain.exception.InvalidArgumentException;
+import com.senai.flora.domain.exception.StatusException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -62,5 +64,17 @@ public class Flower {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void validatePrice(Double price){
+        if (price <= 5) {
+            throw new InvalidArgumentException("The minimal price is $5");
+        }
+    }
+
+    public void validateStatusChange(Double price){
+        if (price > 30){
+            throw new StatusException("Flowers with price bigger than $30 can´t be disabled");
+        }
     }
 }
