@@ -20,7 +20,7 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     private final FlowerRepository repository;
     private final FlowerMapper mapper;
 
-    // Constructor injection (better practice for testing and immutability)
+    // injection by constructor (better practice for testing and immutability)
     public FlowerAppServiceImpl(FlowerRepository repository, FlowerMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
@@ -95,14 +95,14 @@ public class FlowerAppServiceImpl implements FlowerAppService {
 
     public void validateName(String name) {
         if (name.trim().isEmpty()) {
-            throw new InvalidArgumentException("Flower name can´t be empty");
+            throw new InvalidArgumentException("Flower name can't be empty");
         }
     }
 
 
     public void validateColor(String color) {
         if (color.trim().isEmpty()) {
-            throw new InvalidArgumentException("Flower color can´t be empty");
+            throw new InvalidArgumentException("Flower color can't be empty");
         }
     }
 

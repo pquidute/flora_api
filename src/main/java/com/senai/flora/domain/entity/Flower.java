@@ -66,6 +66,17 @@ public class Flower {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Flower{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", color='" + color + '\'' +
+                ", price=" + price +
+                ", status=" + status +
+                '}';
+    }
+
     public void validatePrice(Double price){
         if (price <= 5) {
             throw new InvalidArgumentException("The minimal price is $5");
