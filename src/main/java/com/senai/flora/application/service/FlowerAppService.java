@@ -13,6 +13,6 @@ public interface FlowerAppService {
     List<FlowerDto> listFlowers();
     List<FlowerDto> listDisabledFlowers();
     Optional<FlowerDto> getFlowerById(Long id);
-    boolean updateFlower(Long id, FlowerDto dto);
+    FlowerDto updateFlower(Long id, FlowerDto dto);
     boolean disableFlower(Long id);
 }

@@ -7,7 +7,6 @@ import com.senai.flora.domain.exception.FlowerNotFoundException;
 import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.repository.FlowerRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,7 +62,7 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     }
 
     @Override
-    public boolean updateFlower(Long id, FlowerDto dto) {
+    public FlowerDto updateFlower(Long id, FlowerDto dto) {
         Flower target = repository.findByIdAndStatusTrue(id)
                 .orElseThrow(() -> new FlowerNotFoundException("Flower not found or not active"));
 
@@ -71,7 +70,7 @@ public class FlowerAppServiceImpl implements FlowerAppService {
         Flower flower = formatBody(dto);
         flower.setId(target.getId());
         repository.save(flower);
-        return true;
+        return dto;
     }
 
     @Override

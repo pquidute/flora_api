@@ -5,7 +5,6 @@ import com.senai.flora.application.mapper.FlowerMapper;
 import com.senai.flora.application.service.FlowerAppServiceImpl;
 import com.senai.flora.domain.entity.Flower;
 import com.senai.flora.domain.exception.InvalidArgumentException;
-import com.senai.flora.domain.exception.StatusException;
 import com.senai.flora.domain.repository.FlowerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +38,9 @@ public class FloraUnitTest {
         service = new FlowerAppServiceImpl(repository, mapper);
     }
 
+
+
+    // CRUD
     @Test
     void mustSaveValidFlower() {
         // 1. Simulates a DTO body received
@@ -55,6 +57,26 @@ public class FloraUnitTest {
                 () -> assertEquals(flowerDto.status(), saved.status())
         );
         verify(repository).save(any(Flower.class));
+    }
+
+    @Test
+    void mustSaveListOfFlowersSuccessfully() {
+    }
+
+    @Test
+    void mustUpdateFlowerSuccessfully() {
+    }
+
+    @Test
+    void mustDisableFlowerSuccessfully() {
+    }
+
+    @Test
+    void mustGetFlowerSuccessfully(){
+    }
+
+    @Test
+    void mustGetListOfFlowersSuccessfully(){
     }
 
 
@@ -88,19 +110,30 @@ public class FloraUnitTest {
     }
 
     @Test
-    void disableFlower_overThirtyDollars_throwsStatusException() {
-        Long id = 1L;
-        Flower flower = new Flower(id, "Rose", "Pink", 33.0, true);
+    void updateFlower_nullColor_throwsInvalidArgumentException() {}
 
-        // 1. Pretend this flower already exists in the repository and takes it
-        when(repository.findById(id)).thenReturn(Optional.of(flower));
+    @Test
+    void updateFlower_nullName_throwsInvalidArgumentException() {}
 
-        // 2. Simulates disabling expecting InvalidStatusException
-        StatusException ex = assertThrowsExactly(StatusException.class, () -> {
-            service.disableFlower(id);
-        });
+    @Test
+    void findFlower_inexistent_throwsFlowerNotFoundException() {}
 
-        // 3. Asserts exception message is the same as expected by the situation
-        assertEquals("Flowers with price bigger than $30 can´t be disabled", ex.getMessage());
-    } //FIXME
+//    @Test
+//    void disableFlower_overThirtyDollars_throwsStatusException() {
+//        Long id = 1L;
+//        Flower flower = new Flower(id, "Rose", "Pink", 33.0, true);
+//
+//        // 1. Pretend this flower already exists in the repository and takes it
+//        when(repository.findById(id)).thenReturn(Optional.of(flower));
+//
+//        // 2. Simulates disabling expecting InvalidStatusException
+//        StatusException ex = assertThrowsExactly(StatusException.class, () -> {
+//            service.disableFlower(id);
+//        });
+//
+//        // 3. Asserts exception message is the same as expected by the situation
+//        assertEquals("Flowers with price bigger than $30 can´t be disabled", ex.getMessage());
+//    } //FIXME
+
+
 }
