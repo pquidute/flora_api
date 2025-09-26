@@ -34,12 +34,15 @@ public class FlowerAppServiceImpl implements FlowerAppService {
     }
 
     @Override
-    public void saveFlowers(List<FlowerDto> flowers) {
+    public List<FlowerDto> saveFlowers(List<FlowerDto> flowers) {
+        List<FlowerDto> savedFlowers = List.of();
         for (FlowerDto f : flowers){
             validateFlower(f);
             Flower flower = formatBody(f);
             repository.save(flower);
+            savedFlowers.add(mapper.toDto(flower));
         }
+        return savedFlowers;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.senai.flora.ui.controller;
+package com.senai.flora.ui_controller;
 
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.service.FlowerAppServiceImpl;

@@ -14,12 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FloraUnitTest {
@@ -43,10 +43,10 @@ public class FloraUnitTest {
     // CRUD
     @Test
     void mustSaveValidFlower() {
-        // 1. Simulates a DTO body received
+        // Simulates a DTO body being received
         FlowerDto flowerDto = new FlowerDto(null, "Rose", "Pink", 20.0, true);
 
-        // 2. Simulates saving (converts to entity inside this method)
+        // Simulates saving (converts to entity inside this method)
         FlowerDto saved = service.saveFlower(flowerDto);
 
         assertNotNull(saved);
@@ -61,7 +61,31 @@ public class FloraUnitTest {
 
     @Test
     void mustSaveListOfFlowersSuccessfully() {
-    }
+        // Simulates a list of DTO bodies being received
+        List<FlowerDto> flowersDto = new ArrayList<FlowerDto>() {{
+            add(new FlowerDto(null, "Rose", "Pink", 20.0, true));
+            add(new FlowerDto(null, "Tulip", "Yellow", 15.5, true));
+            add(new FlowerDto(null, "Sunflower", "Yellow", 10.0, false));
+            add(new FlowerDto(null, "Lily", "White", 30.0, true));
+            add(new FlowerDto(null, "Daffodil", "Orange", 18.0, false));
+            add(new FlowerDto(null, "Orchid", "Purple", 50.0, true));
+            add(new FlowerDto(null, "Carnation", "Red", 25.0, false));
+            add(new FlowerDto(null, "Violet", "Blue", 12.0, true));
+            add(new FlowerDto(null, "Tulip", "Purple", 22.0, true));
+            add(new FlowerDto(null, "Chrysanthemum", "Pink", 28.0, false));
+        }};
+
+        // Simulates saving (converts to entity inside this method)
+        List<FlowerDto> savedFlowers = service.saveFlowers(flowersDto);
+
+        assertNotNull(savedFlowers);
+        assertAll(
+                () -> assertEquals(savedFlowers.size(), flowersDto.size()),
+                () -> assertEquals(savedFlowers.getLast(), flowersDto.getLast()),
+                () -> assertEquals(savedFlowers.getFirst(), flowersDto.getFirst())
+        );
+        verify(repository).save(any(Flower.class));
+    }   //FIXME - throwing UnsupportedOperationException
 
     @Test
     void mustUpdateFlowerSuccessfully() {
@@ -82,25 +106,25 @@ public class FloraUnitTest {
 
     // EXCEPTIONS
     @Test
-    void saveFlower_nullColor_throwsInvalidArgumentException() {
-        // 1. Simulates a DTO body received
-        FlowerDto flowerDto = new FlowerDto(null, "Rose", "", 20.0, false);
+    void nullColorMustThrowInvalidArgumentException() {
+        // Simulates a DTO body being received
+        FlowerDto flowerDto = new FlowerDto(null, "Rose", "", 20.0, false); // Bodies with null color must throw InvalidArgumentException
 
-        // 2. Simulates saving expecting InvalidArgumentException
+        // Simulates saving expecting InvalidArgumentException
         InvalidArgumentException ex = assertThrowsExactly(InvalidArgumentException.class, () -> {
             service.saveFlower(flowerDto);
         });
 
-        // 3. Asserts exception message is the same as expected by the situation
+        // Asserts exception message is the same as expected by the situation
         assertEquals("Flower color can't be empty", ex.getMessage());
     }
 
     @Test
-    void saveFlower_nullName_throwsInvalidArgumentException() {
-        // 1. Simulates a DTO body received
-        FlowerDto flowerDto = new FlowerDto(null, "", "Pink", 20.0, false);
+    void nullNameMustThrowsInvalidArgumentException() {
+        // Simulates a DTO body received
+        FlowerDto flowerDto = new FlowerDto(null, "", "Pink", 20.0, false); // Bodies with null name must throw InvalidArgumentException
 
-        // 2. Simulates saving expecting InvalidArgumentException
+        // Simulates saving expecting InvalidArgumentException
         InvalidArgumentException ex = assertThrowsExactly(InvalidArgumentException.class, () -> {
            service.saveFlower(flowerDto);
         });
