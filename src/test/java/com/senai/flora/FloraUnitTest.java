@@ -43,7 +43,7 @@ public class FloraUnitTest {
 
 
 
-    // CONTROLLER TESTS
+
     @Test
     void mustSaveValidFlower() {
         // Simulates a DTO body being received
@@ -174,7 +174,6 @@ public class FloraUnitTest {
         }
 
 
-    // EXCEPTIONS
     @Test
     void nullColorMustThrowInvalidArgumentExceptionOnFlowerSave() {
         // Simulates a DTO body being received
