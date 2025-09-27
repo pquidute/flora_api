@@ -2,6 +2,7 @@ package com.senai.flora.ui_controller;
 
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.service.FlowerAppServiceImpl;
+import com.senai.flora.domain.exception.FlowerNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -22,6 +23,13 @@ public class FlowerController {
     @Autowired
     FlowerAppServiceImpl service;
 
+    @Operation(summary = "List all disabled flowers")
+    @GetMapping("/disabled")
+    public ResponseEntity<List<FlowerDto>> listDisabledFlowers(){
+        List<FlowerDto> flowers = service.listDisabledFlowers();
+        return ResponseEntity.ok(flowers);
+    }
+
     @Operation(
             summary = "List all active flowers",
             responses = {
@@ -31,13 +39,9 @@ public class FlowerController {
     @GetMapping
     public ResponseEntity<List<FlowerDto>> listFlowers(){
         List<FlowerDto> flowers = service.listFlowers();
-        return ResponseEntity.ok(flowers);
-    }
-
-    @Operation(summary = "List all disabled flowers")
-    @GetMapping("/disabled")
-    public ResponseEntity<List<FlowerDto>> listDisabledFlowers(){
-        List<FlowerDto> flowers = service.listDisabledFlowers();
+        if (flowers.isEmpty()){
+            throw new FlowerNotFoundException("No flowers registered or no flowers active!");
+        }
         return ResponseEntity.ok(flowers);
     }
 
