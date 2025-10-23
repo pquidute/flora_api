@@ -20,8 +20,8 @@ public class SecurityConfig {
     private final UserDetailsService usuarioDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(UserDetailsService usuarioDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.usuarioDetailsService = usuarioDetailsService;
+    public SecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.usuarioDetailsService = userDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
@@ -30,7 +30,7 @@ public class SecurityConfig {
         http.csrf(
                         AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/auth/**","/swagger-ui/**","/v3/api-docs/**", "/h2-console/**").permitAll()
+                        .requestMatchers("api/auth/**","/swagger-ui/**","/v3/api-docs/**", "/h2-console/**").permitAll()    //FIXME h2 console doesn´t work
 
                         .requestMatchers(HttpMethod.POST, "/api/flowers").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/flowers").hasAnyRole("ADMIN","CLIENT")

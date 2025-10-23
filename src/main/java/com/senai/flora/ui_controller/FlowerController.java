@@ -80,6 +80,8 @@ public class FlowerController {
                     @ApiResponse(responseCode = "400", description = "Bad request")
             }
     )
+
+    //FIXME returns forbidden 403 even with authentication
     @PostMapping
     public ResponseEntity<String> saveFlower(@RequestBody FlowerDto flowerDto){
         service.saveFlower(flowerDto);
