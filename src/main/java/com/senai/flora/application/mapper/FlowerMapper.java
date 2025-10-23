@@ -1,7 +1,7 @@
 package com.senai.flora.application.mapper;
 
 import com.senai.flora.application.dto.FlowerDto;
-import com.senai.flora.domain.entity.Flower;
+import com.senai.flora.domain.model.Flower;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

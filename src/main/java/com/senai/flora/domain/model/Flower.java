@@ -1,4 +1,4 @@
-package com.senai.flora.domain.entity;
+package com.senai.flora.domain.model;
 
 import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.exception.StatusException;

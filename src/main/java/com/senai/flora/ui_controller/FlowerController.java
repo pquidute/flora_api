@@ -1,7 +1,7 @@
 package com.senai.flora.ui_controller;
 
 import com.senai.flora.application.dto.FlowerDto;
-import com.senai.flora.application.service.FlowerAppServiceImpl;
+import com.senai.flora.application.service.FlowerService;
 import com.senai.flora.domain.exception.FlowerNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/flowers")
 public class FlowerController {
     @Autowired
-    FlowerAppServiceImpl service;
+    FlowerService service;
 
     @Operation(summary = "List all disabled flowers")
     @GetMapping("/disabled")
@@ -36,7 +36,8 @@ public class FlowerController {
                     @ApiResponse(responseCode = "400", description = "Bad request")
             }
     )
-    @GetMapping
+
+    @GetMapping("/all")
     public ResponseEntity<List<FlowerDto>> listFlowers(){
         List<FlowerDto> flowers = service.listFlowers();
         if (flowers.isEmpty()){

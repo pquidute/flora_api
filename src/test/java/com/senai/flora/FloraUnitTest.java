@@ -2,8 +2,8 @@ package com.senai.flora;
 
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.mapper.FlowerMapper;
-import com.senai.flora.application.service.FlowerAppServiceImpl;
-import com.senai.flora.domain.entity.Flower;
+import com.senai.flora.application.service.FlowerService;
+import com.senai.flora.domain.model.Flower;
 import com.senai.flora.domain.exception.FlowerNotFoundException;
 import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.exception.StatusException;
@@ -33,12 +33,12 @@ public class FloraUnitTest {
     private FlowerMapper mapper = Mappers.getMapper(FlowerMapper.class);
 
     @InjectMocks
-    private FlowerAppServiceImpl service;
+    private FlowerService service;
 
     //Inject a mapper and a repository to the service before each test
     @BeforeEach
     void setUp() {
-        service = new FlowerAppServiceImpl(repository, mapper);
+        service = new FlowerService(repository, mapper);
     }
 
 

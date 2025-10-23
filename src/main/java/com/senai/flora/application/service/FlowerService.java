@@ -2,7 +2,7 @@ package com.senai.flora.application.service;
 
 import com.senai.flora.application.dto.FlowerDto;
 import com.senai.flora.application.mapper.FlowerMapper;
-import com.senai.flora.domain.entity.Flower;
+import com.senai.flora.domain.model.Flower;
 import com.senai.flora.domain.exception.FlowerNotFoundException;
 import com.senai.flora.domain.exception.InvalidArgumentException;
 import com.senai.flora.domain.repository.FlowerRepository;
@@ -16,17 +16,16 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class FlowerAppServiceImpl implements FlowerAppService {
+public class FlowerService {
     private final FlowerRepository repository;
     private final FlowerMapper mapper;
 
     // injection by constructor (better practice for testing and immutability)
-    public FlowerAppServiceImpl(FlowerRepository repository, FlowerMapper mapper) {
+    public FlowerService(FlowerRepository repository, FlowerMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
-    @Override
     public FlowerDto saveFlower(FlowerDto dto) {
         validateFlower(dto);
         Flower flower = formatBody(dto);
@@ -34,7 +33,6 @@ public class FlowerAppServiceImpl implements FlowerAppService {
         return mapper.toDto(flower);
     }
 
-    @Override
     public List<FlowerDto> saveFlowers(List<FlowerDto> flowers) {
         List<FlowerDto> savedFlowers = new ArrayList<>();
         for (FlowerDto f : flowers){
@@ -46,17 +44,14 @@ public class FlowerAppServiceImpl implements FlowerAppService {
         return savedFlowers;
     }
 
-    @Override
     public List<FlowerDto> listFlowers() {
         return repository.findByStatusTrue().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    @Override
     public List<FlowerDto> listDisabledFlowers() {
         return repository.findByStatusFalse().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
-    @Override
     public Optional<FlowerDto> getFlowerById(Long id) {
         Flower target = repository.findByIdAndStatusTrue(id)
                 .orElseThrow(() -> new FlowerNotFoundException("Inexistent flower or disabled"));
@@ -64,7 +59,6 @@ public class FlowerAppServiceImpl implements FlowerAppService {
         return Optional.ofNullable(targetDto);
     }
 
-    @Override
     public FlowerDto updateFlower(Long id, FlowerDto dto) {
         Flower target = repository.findByIdAndStatusTrue(id)
                 .orElseThrow(() -> new FlowerNotFoundException("Inexistent flower or disabled"));
@@ -76,7 +70,6 @@ public class FlowerAppServiceImpl implements FlowerAppService {
         return dto;
     }
 
-    @Override
     public boolean disableFlower(Long id) {
         return repository.findByIdAndStatusTrue(id).map(flower -> {
             flower.validateStatusChange(flower.getPrice());
