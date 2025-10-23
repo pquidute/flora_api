@@ -1,14 +1,32 @@
 package com.senai.flora.domain.model;
 
+import com.senai.flora.domain.enums.UserRole;
 import jakarta.persistence.*;
 
+@Table(name = "users")
 @Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public User(String name, String username, String password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
+    private String name;
+    private String username;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
 
     public Long getId() {
@@ -43,12 +61,11 @@ public class User {
         this.password = password;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public UserRole getRole() {
+        return role;
+    }
 
-    private String name;
-    private String username;
-    private String password;
-
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 }

@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @Tag(name = "Flora", description = "Manage flora flowers")
 @RestController
-@RequestMapping("/flowers")
+@RequestMapping("/api/flowers")
 public class FlowerController {
     @Autowired
     FlowerService service;
@@ -80,7 +80,7 @@ public class FlowerController {
                     @ApiResponse(responseCode = "400", description = "Bad request")
             }
     )
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<String> saveFlower(@RequestBody FlowerDto flowerDto){
         service.saveFlower(flowerDto);
         return ResponseEntity.ok(flowerDto.name() + " successfully saved!");

@@ -10,3 +10,4 @@ public class FloraApplication {
 		SpringApplication.run(FloraApplication.class, args);
 	}
 }
+
