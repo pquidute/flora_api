@@ -30,7 +30,7 @@ public class SecurityConfig {
         http.csrf(
                         AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("api/auth/**","/swagger-ui/**","/v3/api-docs/**", "/h2-console/**").permitAll()    //FIXME h2 console doesn´t work
+                        .requestMatchers("api/auth/**","/swagger-ui/**","/v3/api-docs/**", "/h2-console/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/flowers").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/flowers").hasAnyRole("ADMIN","CLIENT")
@@ -39,6 +39,9 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(usuarioDetailsService);
+
+        // Disable frame options for H2 console (required for iframe usage in H2 console)
+        http.headers().frameOptions().disable();
 
         return http.build();
     }

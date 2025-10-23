@@ -81,7 +81,6 @@ public class FlowerController {
             }
     )
 
-    //FIXME returns forbidden 403 even with authentication
     @PostMapping
     public ResponseEntity<String> saveFlower(@RequestBody FlowerDto flowerDto){
         service.saveFlower(flowerDto);
